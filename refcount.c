@@ -219,7 +219,7 @@ static char *DRVR_devnode(struct device *dev, umode_t *mode)
 static int PROC_show(struct seq_file *m, void *v)
 {
 
-	seq_printf(m, "\nCharacters in memory\n" );
+	seq_printf(m, "\nVmalloced memory\n" );
 
 	lnode tmp = head;
 	while(tmp != NULL) {
@@ -227,7 +227,7 @@ static int PROC_show(struct seq_file *m, void *v)
 		tmp = tmp->next;
 	}
 
-	seq_printf(m, "\nReleasing saved references\n" );
+	seq_printf(m, "\nReleasing memory references\n" );
 
 	int i = 0;
 	for(i=0; i<refcount; i++) {
@@ -238,6 +238,7 @@ static int PROC_show(struct seq_file *m, void *v)
 	seq_printf(m, "\nMemory references freed\n" );
 
 	refcount = 0;
+	head = tail = NULL;
 
 	return 0;
 }
